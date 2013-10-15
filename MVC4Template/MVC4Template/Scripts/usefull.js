@@ -1,4 +1,4 @@
-﻿test
+﻿
 //USAGE:
 //var bv = navigator.uaMatch();
 //alert(bv.browser + " -- " + bv.version);
