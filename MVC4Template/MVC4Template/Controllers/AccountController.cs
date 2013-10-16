@@ -15,7 +15,7 @@ namespace MVC4Template.Controllers
 {
     [Authorize]
     [InitializeSimpleMembership]
-    public class AccountController : Controller
+    public class AccountController : ApplicationController
     {
         //
         // GET: /Account/Login

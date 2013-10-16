@@ -14,7 +14,7 @@ namespace MVC4Template
                         "~/Content/Frameworks/js/bootstrap.min.js",
                         "~/Scripts/usefull.js",
                         "~/Scripts/mediator.js",
-                        "~/Scripts/app.js",
+                        "~/Scripts/app.js"
                         ));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(

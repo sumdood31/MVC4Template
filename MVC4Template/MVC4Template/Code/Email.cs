@@ -40,9 +40,9 @@ namespace MVC4Template
     {
         #region Methods
 
-        public static MailMessage GetWelcomeEmail(string toAddress, string userName, string userFullName, string password, string loginUrl, string senderAddress)
+        public static MailMessage GetWelcomeEmail(string toAddress, string userName, string userFullName, string password, string loginUrl)
         {
-           
+
             var templatePath = HttpContext.Current.Server.MapPath("~/Views/EmailTemplates/Welcome.cshtml");
 
             var body = EmailTemplateResolver.GetEmailBody(
@@ -56,9 +56,25 @@ namespace MVC4Template
                 });
 
             return new MailMessage(
-                    senderAddress,
+                    StaticConfig.MailSenderAddress,
                     toAddress,
                     "Welcome to our site!",
+                    body);
+        }
+
+        public static MailMessage GetErrorEmail(Exception err)
+        {
+
+            var templatePath = HttpContext.Current.Server.MapPath("~/Views/EmailTemplates/Error.cshtml");
+
+            var body = EmailTemplateResolver.GetEmailBody(
+                templatePath,
+                err);
+
+            return new MailMessage(
+                    StaticConfig.MailSenderAddress,
+                    StaticConfig.MailErrorAddress,
+                    "Error In " + StaticConfig.SiteName,
                     body);
         }
 
@@ -114,25 +130,4 @@ namespace MVC4Template
         #endregion Properties
     }
 
-    //public static class Email
-    //{
-        
-
-    //    public static Email(EmailTemplate emailTemplate)
-    //    {
-    //        smtpClient = new SmtpClient
-    //        {
-    //            Host = 
-    //              ConfigurationManager.AppSettings["SmtpServer"],
-    //            Port = 
-    //              Convert.ToInt32(
-    //                ConfigurationManager.AppSettings["SmtpPort"]),
-    //            DeliveryMethod = SmtpDeliveryMethod.Network
-    //        };
-    //        smtpClient.UseDefaultCredentials = false;
-    //        smtpClient.Credentials = new NetworkCredential(
-    //           ConfigurationManager.AppSettings["SmtpUser"],
-    //           ConfigurationManager.AppSettings["SmtpUser"]
-    //    }
-    //}
 }
