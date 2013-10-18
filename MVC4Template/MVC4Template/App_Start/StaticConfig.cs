@@ -51,7 +51,13 @@ namespace MVC4Template
             }
         }
 
-
+        public static string BaseSiteUrl
+        {
+            get
+            {
+                return System.Configuration.ConfigurationManager.AppSettings["URL"] as string;
+            }
+        }
 
         #region Static Mail Settings
 
