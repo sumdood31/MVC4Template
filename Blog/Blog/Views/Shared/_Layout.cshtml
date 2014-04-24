@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        
+        @RenderSection("HeaderMeta", required:true)
+        
+        @Styles.Render("~/Content/css")
+        
+    </head>
+    <body>
+        <script type="text/javascript">
+        var navItem = "@Model.AppModel.ActiveTopNavLink";
+        //alert(navItem);
+
+        </script>
+
+        <div class="container pageWrap" id="topSearch">
+            <div class="hidden-xs col-sm-9 col-md-9 col-lg-9" style="height: 40px;"></div>
+            <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 vcenter" style="height: 40px; padding-top: 8px;">
+                <input type="text" id="txtSiteSearch" />
+                <span style="color: white; border:solid 1px white; padding:2px; cursor: pointer;">Search</span>
+            </div>
+        </div>
+
+        <div class="container pageWrap background" id="topNav">
+            <div class="col-md-6" style="font-size: 21px; color:white;">
+                <label>&#8623; </label>
+            </div>
+            <div class="col-md-6" style="">
+                <div class="col-md-12" id="mainNav">
+                    <ul>
+                        <li index="1"><a href="#">Science</a></li>
+                        <li><a href="#">Tech</a></li>
+                        <li><a href="#">Manufacturing</a></li>
+                        <li><a href="#">Nature</a></li>
+                        <li><a href="#">Other</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-12">
+                    <div id="navSlider">
+                        <div id="navSliderItem" class="science"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container pageWrap background">
+            @RenderSection("MainBody", required: true)
+            @RenderSection("RightSide", required: true)
+
+            @Scripts.Render("~/Content/js")
+            @RenderSection("scripts", required: false)
+        </div>
+</body>
+</html>

@@ -1,0 +1,254 @@
+﻿@font-face {
+            font-family: Segoe Condensed;
+            src: url('Delicious-Roman.otf');
+        } 
+
+/* ----------------SITE SETTINGS -----------------*/
+        body {
+            background-color: #C9D3E2;
+        }
+        .background {
+            background: url('/Content/Img/backGround.jpg') repeat;
+        }
+        .science {
+            background-color: #5DBBCE
+        }
+        .tech {
+             background-color: #A7DBD8
+        }
+        .manufacturing {
+              background-color: #E0E4CC
+        }
+        .nature {
+             background-color: #F38630
+        }
+        .other {
+            background-color: #FA6900
+        }
+        .vcenter {
+            display: table-cell;
+            vertical-align: middle;
+            float: none;
+        }
+
+        .pageWrap {
+            border-left: solid 1px #797F88;
+            border-right: solid 1px #797F88;
+        }
+
+        #topSearch {
+            background-color: black;
+        }
+
+        #txtSiteSearch {
+            text-transform: uppercase;
+        }
+
+
+        #topNav {
+            background-color: #ECEBE9;
+            padding-top: 40px;
+            padding-bottom: 40px;
+        }
+        #topNav a {
+            color: black;
+        }
+
+        /*#topNav a {
+                font-family: Segoe Condensed;
+            }*/
+
+        #mainNav {
+            text-transform: uppercase;
+            font-family: arial;
+            font-size: 18px;
+        }
+
+        #mainNav ul {
+            margin: 0px;
+            padding: 0px;
+            list-style: none;
+        }
+
+        #mainNav li {
+            float: left;
+            margin-right: 17px;
+        }
+
+        #navSlider {
+            height: 5px;
+            width: 100%;
+            background-color: grey;
+        }
+
+        #navSliderItem {
+            height: 100%;
+            background: grey;
+            position: relative;
+            left: 0px;
+        }
+/* ----------END------SITE SETTINGS --------END---------*/
+
+/*--------------  POST ----------- */
+
+            .postWrap {
+                margin-bottom: 35px;
+                background-color: white;
+            }
+
+            .postDate {
+                position: absolute;
+                background-color: black;
+                height: 60px;
+                width: 60px;
+                left: -20px;
+                border-radius: 30px;
+                text-align: center;
+                color: white;
+                font-weight: bold;
+                padding-top: 12px;
+                margin-top: 19px;
+            }
+
+            .science-Date {
+                box-shadow: 0px 0px 5px #5DBBCE
+            }
+            .tech-Date {
+                 box-shadow: 0px 0px 5px #A7DBD8
+            }
+            .manufacturing-Date {
+                  box-shadow: 0px 0px 5px #E0E4CC
+            }
+            .nature-Date {
+                 box-shadow: 0px 0px 5px #F38630
+            }
+            .other-Date {
+                box-shadow: 0px 0px 5px #FA6900
+            }
+
+            .postDate div {
+                font-size: 21px;
+                margin: 0px;padding: 0px;
+                line-height: 15px;
+            }
+            .postDate .date {
+                font-size: 12px;
+            }
+
+            .post {
+                width: 100%;
+                padding: 35px;
+                padding-left: 45px;
+                /*padding-left: 30px;
+                padding-top: 35px;
+                padding-bottom: 35px;*/
+            }
+            .post h4 {
+                margin: 0px;
+                padding: 0px;
+                margin-bottom: 20px;
+                font-size: 26px;
+                font-weight: bold;
+            }
+            .post h4 a {
+                    color: #333333;
+            }
+            .post p {
+                margin: 0px;padding: 0px;
+                padding-top: 20px;
+                padding-bottom: 20px;
+                border-top: solid 1px grey;
+
+            }
+            .post .tags {
+                border-top: #797f88;
+                border-left: #797f88;
+                border-right: #797f88;
+                width: 100%;
+            }
+            .tags {
+                padding-top: 0px;
+                padding-bottom: 15px;
+                border-bottom: solid 1px grey;
+            }
+            .tags a {
+                padding-right: 10px;
+                padding-left: 10px;
+            }
+            .post .additionalLists {
+                border-bottom: solid 1px #797f88;
+                padding-top: 10px;
+                height: 60px;
+
+            }
+            .post .additionalLists .listItem {
+                border-right: #797f88;
+                /*float: left;
+                width: 200px;*/
+            }
+            .post .additionalLists .listItem h6 {
+                padding: 0px;margin: 0px;
+                font-weight: bold;
+                font-size: 14px;
+            }
+
+/*-------END-------  POST -----EMD------ */
+
+/*------------------SIDE ITEMS ---------  */
+
+ .sideItem {
+            width: 100%;
+            padding: 10px;
+        }
+        .sideFiller {
+            background: url('/Content/Img/backGround.jpg') repeat;
+            height: 35px;
+        }
+        .sideItem h4 {
+            margin: 0px;padding: 0px;text-align: center;
+        }
+        .sideItem h3 {
+            margin: 0px;
+            padding: 0px;
+            text-align: center;
+        }
+        #trendingPosts {
+            
+        }
+        #trendingPosts ul {
+                width: 100%;
+                height: 150px;
+                list-style: none;
+                margin: 0px;
+                padding: 0px;
+                margin-top: 10px;
+        }
+        #trendingPosts li {
+                line-height: 25px;
+        }
+        #sideItemTags {
+            text-align: center;
+        }
+        #sideItemTags ul {
+            width: 100%;
+            height: 40px;
+            list-style: none;
+            margin: 0px;
+            padding: 0px;
+        }
+        #sideItemTags li {
+            float: left;
+        }
+            #sideItemTags .navArrow {
+                width: 20%;
+                font-size: 18px;
+                cursor: pointer;
+            }
+            #sideItemTags .tagCat {
+                width: 60%;
+            }
+            #sideItemTags .tagCatList {
+                
+            }
+
+/*--------END----------SIDE ITEMS -----END  ----  */

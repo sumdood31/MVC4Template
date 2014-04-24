@@ -1,0 +1,157 @@
+﻿@using BlogData
+@model BlogAdmin.Models.NewArticleModel
+@{
+    ViewBag.Title = "EditArticle";
+}
+
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        $('#btnUpdate').click(function () {
+          
+            var model =
+            {
+                ArticleId: $('#ArticleId').val(),
+                CreatedDate: $('#CreatedDate').val(),
+                Name: $('#Name').val(),
+                Title: $('#Title').val(),
+                Description: $('#Description').val(),
+                Author: $('#Author').val(),
+                Keywords: $('#Keywords').val(),
+                PrimaryCategory: $('#PrimaryCategory').val(),
+                MainContent: $('#MainContent').val(),
+                SideContent: $('#SideContent').val(),
+                ListItemContent: $('#ListItemContent').val(),
+                ViewRequests: $('#ViewRequests').val(),
+                URLLink: $('#URLLink').val(),
+                PreviewImg: $('#PreviewImg').val(),
+                isCopied: $('#isCopied').val()
+            }
+
+            $.ajax({
+                url: 'UpdateArticle',
+                data: JSON.stringify(model),
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    alert('updated');
+                },
+                error: function () {
+                    alert("Dood, something didn't work...your welcome");
+                }
+            });
+
+        });
+
+
+        $("#tagSearch").autocomplete({
+            source: function (request, response) {
+
+                    $.ajax({
+                        url: 'AllTags?searchTerm=' + request.term,
+                        dataType: 'json',
+                        success: function (data) {
+                            response(data);
+                        }
+                    });
+            },
+            select: function(event, ui) {
+                
+                $.ajax({
+                    url: 'AddArticleTag?tagId=' + ui.item.id + "&postId=" + $('#ArticleId').val(),
+                    type: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data) {
+                        $('#currentTags').append(ui.item.value);
+                    },
+                    error: function () {
+                        alert("Dood, something didn't work...your welcome");
+                    }
+                });
+            }
+        }).data("autocomplete")._renderItem = function (ul, item) {
+            return $("<li></li>")
+				.data("item.autocomplete", item)
+				.append("<a>" + item.value + " " + item.id + "</a>")
+				.appendTo(ul);
+        };
+
+ 
+
+    });
+</script>
+
+<h2>EditArticle</h2>
+<input type="hidden" id="ArticleId" value="@Model.Article.ArticleId"/>
+<input type="hidden" id="CreatedDate" value="@Model.Article.CreatedDate">
+<table>
+    <tr>
+        <td>Name</td>
+        <td><input type="text" id="Name" value="@Model.Article.Name"  /></td>
+    </tr>
+    <tr>
+        <td>Title</td>
+        <td><input type="text" id="Title" value="@Model.Article.Title"  /></td>
+    </tr>
+    <tr>
+        <td>Description</td>
+        <td><input type="text" id="Description" value="@Model.Article.Description"  /></td>
+    </tr>
+    <tr>
+        <td>Author</td>
+        <td><input type="text" id="Author" value="@Model.Article.Author"  /></td>
+    </tr>
+    <tr>
+        <td>Keywords</td>
+        <td><input type="text" id="Keywords" value="@Model.Article.Keywords"  /></td>
+    </tr>
+    <tr>
+        <td>PrimaryCategory</td>
+        <td><input type="text" id="PrimaryCategory" value="@Model.Article.PrimaryCategory"  /></td>
+    </tr>
+    <tr>
+        <td>MainContent</td>
+        <td><input type="text" id="MainContent" value="@Model.Article.MainContent"  /></td>
+    </tr>
+    <tr>
+        <td>SideContent</td>
+        <td><input type="text" id="SideContent" value="@Model.Article.SideContent"  /></td>
+    </tr>
+    <tr>
+        <td>ListItemContent</td>
+        <td><input type="text" id="ListItemContent" value="@Model.Article.ListItemContent"  /></td>
+    </tr>
+    <tr>
+        <td>ViewRequests</td>
+        <td><input type="text" id="ViewRequests" value="@Model.Article.ViewRequests"  /></td>
+    </tr>
+    <tr>
+        <td>URLLink</td>
+        <td><input type="text" id="URLLink" value="@Model.Article.URLLink"  /></td>
+    </tr>
+    <tr>
+        <td>PreviewImg</td>
+        <td><input type="text" id="PreviewImg" value="@Model.Article.PreviewImg"  /></td>
+    </tr>
+    <tr>
+        <td>isCopied</td>
+        <td><input type="text" id="isCopied" value="@Model.Article.isCopied" /></td>
+    </tr>
+    <tr>
+        <td><input type="text" id="tagSearch" /><input type="button" value="Add New Tag" /></td>
+        <td><div id="currentTags">
+                @foreach (ArticleTag tag in Model.Article.ArticleTags)
+                {
+                    @tag.Tag.TagName @:,
+                }
+            </div></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><input type="text" id="" /></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><input type="button" value="Update" id="btnUpdate" /></td>
+    </tr>
+</table>

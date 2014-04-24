@@ -1,0 +1,625 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="BlogModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Article">
+          <Key>
+            <PropertyRef Name="ArticleId" />
+          </Key>
+          <Property Name="ArticleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdateDate" Type="datetime" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Author" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Keywords" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="PrimaryCategory" Type="nvarchar" MaxLength="150" />
+          <Property Name="MainContent" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="SideContent" Type="nvarchar(max)" />
+          <Property Name="ListItemContent" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ViewRequests" Type="int" Nullable="false" />
+          <Property Name="URLLink" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="PreviewImg" Type="nvarchar" MaxLength="600" />
+          <Property Name="isCopied" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ArticleCategory">
+          <Key>
+            <PropertyRef Name="JoinRowId" />
+          </Key>
+          <Property Name="JoinRowId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ArticleId" Type="int" Nullable="false" />
+          <Property Name="CategoryId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ArticleComment">
+          <Key>
+            <PropertyRef Name="CommentId" />
+          </Key>
+          <Property Name="CommentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ArticleId" Type="int" Nullable="false" />
+          <Property Name="PosterName" Type="nvarchar" MaxLength="250" />
+          <Property Name="PosterEmail" Type="nvarchar" MaxLength="250" />
+          <Property Name="PosterWebSite" Type="nvarchar" MaxLength="250" />
+          <Property Name="CommentText" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RepyToCommentId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ArticleTag">
+          <Key>
+            <PropertyRef Name="JoinRowId" />
+          </Key>
+          <Property Name="JoinRowId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ArticleId" Type="int" Nullable="false" />
+          <Property Name="TagId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="CategoryRowId" />
+          </Key>
+          <Property Name="CategoryRowId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TopNavIndex" Type="int" Nullable="false" />
+          <Property Name="CategoryId" Type="int" />
+          <Property Name="CategoryName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CategoryUrl" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Error">
+          <Key>
+            <PropertyRef Name="ErrorId" />
+          </Key>
+          <Property Name="ErrorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RefId" Type="int" Nullable="false" />
+          <Property Name="ErrorMethod" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="ErrorText" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="ErrorDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="NewsLetter">
+          <Key>
+            <PropertyRef Name="NewLetterId" />
+          </Key>
+          <Property Name="NewLetterId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tag">
+          <Key>
+            <PropertyRef Name="TagId" />
+          </Key>
+          <Property Name="TagId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TagUrl" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="TagName" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TagCategory">
+          <Key>
+            <PropertyRef Name="JoinRowId" />
+          </Key>
+          <Property Name="JoinRowId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TagId" Type="int" Nullable="false" />
+          <Property Name="CategoryId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tracking">
+          <Key>
+            <PropertyRef Name="TrackingRowId" />
+          </Key>
+          <Property Name="TrackingRowId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="Session" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="IP" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="URL" Type="nvarchar" MaxLength="400" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_ArticleCategory_Article">
+          <End Role="Article" Type="Self.Article" Multiplicity="1" />
+          <End Role="ArticleCategory" Type="Self.ArticleCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Article">
+              <PropertyRef Name="ArticleId" />
+            </Principal>
+            <Dependent Role="ArticleCategory">
+              <PropertyRef Name="ArticleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ArticleCategory_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="ArticleCategory" Type="Self.ArticleCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="CategoryRowId" />
+            </Principal>
+            <Dependent Role="ArticleCategory">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ArticleComment_Article">
+          <End Role="Article" Type="Self.Article" Multiplicity="1" />
+          <End Role="ArticleComment" Type="Self.ArticleComment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Article">
+              <PropertyRef Name="ArticleId" />
+            </Principal>
+            <Dependent Role="ArticleComment">
+              <PropertyRef Name="ArticleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ArticleTag_Article">
+          <End Role="Article" Type="Self.Article" Multiplicity="1" />
+          <End Role="ArticleTag" Type="Self.ArticleTag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Article">
+              <PropertyRef Name="ArticleId" />
+            </Principal>
+            <Dependent Role="ArticleTag">
+              <PropertyRef Name="ArticleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ArticleTag_Tag">
+          <End Role="Tag" Type="Self.Tag" Multiplicity="1" />
+          <End Role="ArticleTag" Type="Self.ArticleTag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tag">
+              <PropertyRef Name="TagId" />
+            </Principal>
+            <Dependent Role="ArticleTag">
+              <PropertyRef Name="TagId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TagCategory_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="TagCategory" Type="Self.TagCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="CategoryRowId" />
+            </Principal>
+            <Dependent Role="TagCategory">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TagCategory_Tag">
+          <End Role="Tag" Type="Self.Tag" Multiplicity="1" />
+          <End Role="TagCategory" Type="Self.TagCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tag">
+              <PropertyRef Name="TagId" />
+            </Principal>
+            <Dependent Role="TagCategory">
+              <PropertyRef Name="TagId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BlogModelStoreContainer">
+          <EntitySet Name="Article" EntityType="Self.Article" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ArticleCategory" EntityType="Self.ArticleCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ArticleComment" EntityType="Self.ArticleComment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ArticleTag" EntityType="Self.ArticleTag" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Error" EntityType="Self.Error" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NewsLetter" EntityType="Self.NewsLetter" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tag" EntityType="Self.Tag" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TagCategory" EntityType="Self.TagCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tracking" EntityType="Self.Tracking" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ArticleCategory_Article" Association="Self.FK_ArticleCategory_Article">
+            <End Role="Article" EntitySet="Article" />
+            <End Role="ArticleCategory" EntitySet="ArticleCategory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ArticleCategory_Category" Association="Self.FK_ArticleCategory_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="ArticleCategory" EntitySet="ArticleCategory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ArticleComment_Article" Association="Self.FK_ArticleComment_Article">
+            <End Role="Article" EntitySet="Article" />
+            <End Role="ArticleComment" EntitySet="ArticleComment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ArticleTag_Article" Association="Self.FK_ArticleTag_Article">
+            <End Role="Article" EntitySet="Article" />
+            <End Role="ArticleTag" EntitySet="ArticleTag" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ArticleTag_Tag" Association="Self.FK_ArticleTag_Tag">
+            <End Role="Tag" EntitySet="Tag" />
+            <End Role="ArticleTag" EntitySet="ArticleTag" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TagCategory_Category" Association="Self.FK_TagCategory_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="TagCategory" EntitySet="TagCategory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TagCategory_Tag" Association="Self.FK_TagCategory_Tag">
+            <End Role="Tag" EntitySet="Tag" />
+            <End Role="TagCategory" EntitySet="TagCategory" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BlogModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Article">
+          <Key>
+            <PropertyRef Name="ArticleId" />
+          </Key>
+          <Property Name="ArticleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Author" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Keywords" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MainContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SideContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ListItemContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ViewRequests" Type="Int32" Nullable="false" />
+          <Property Name="URLLink" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PreviewImg" Type="String" MaxLength="600" FixedLength="false" Unicode="true" />
+          <Property Name="isCopied" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ArticleCategories" Relationship="Self.FK_ArticleCategory_Article" FromRole="Article" ToRole="ArticleCategory" />
+          <NavigationProperty Name="ArticleComments" Relationship="Self.FK_ArticleComment_Article" FromRole="Article" ToRole="ArticleComment" />
+          <NavigationProperty Name="ArticleTags" Relationship="Self.FK_ArticleTag_Article" FromRole="Article" ToRole="ArticleTag" />
+          <Property Name="PrimaryCategory" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ArticleCategory">
+          <Key>
+            <PropertyRef Name="JoinRowId" />
+          </Key>
+          <Property Name="JoinRowId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ArticleId" Type="Int32" Nullable="false" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Article" Relationship="Self.FK_ArticleCategory_Article" FromRole="ArticleCategory" ToRole="Article" />
+          <NavigationProperty Name="Category" Relationship="Self.FK_ArticleCategory_Category" FromRole="ArticleCategory" ToRole="Category" />
+        </EntityType>
+        <EntityType Name="ArticleComment">
+          <Key>
+            <PropertyRef Name="CommentId" />
+          </Key>
+          <Property Name="CommentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ArticleId" Type="Int32" Nullable="false" />
+          <Property Name="PosterName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="PosterEmail" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="PosterWebSite" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="CommentText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RepyToCommentId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Article" Relationship="Self.FK_ArticleComment_Article" FromRole="ArticleComment" ToRole="Article" />
+        </EntityType>
+        <EntityType Name="ArticleTag">
+          <Key>
+            <PropertyRef Name="JoinRowId" />
+          </Key>
+          <Property Name="JoinRowId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ArticleId" Type="Int32" Nullable="false" />
+          <Property Name="TagId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Article" Relationship="Self.FK_ArticleTag_Article" FromRole="ArticleTag" ToRole="Article" />
+          <NavigationProperty Name="Tag" Relationship="Self.FK_ArticleTag_Tag" FromRole="ArticleTag" ToRole="Tag" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="CategoryRowId" />
+          </Key>
+          <Property Name="CategoryRowId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TopNavIndex" Type="Int32" Nullable="false" />
+          <Property Name="CategoryId" Type="Int32" />
+          <Property Name="CategoryName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CategoryUrl" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ArticleCategories" Relationship="Self.FK_ArticleCategory_Category" FromRole="Category" ToRole="ArticleCategory" />
+          <NavigationProperty Name="TagCategories" Relationship="Self.FK_TagCategory_Category" FromRole="Category" ToRole="TagCategory" />
+        </EntityType>
+        <EntityType Name="Error">
+          <Key>
+            <PropertyRef Name="ErrorId" />
+          </Key>
+          <Property Name="ErrorId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RefId" Type="Int32" Nullable="false" />
+          <Property Name="ErrorMethod" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ErrorText" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ErrorDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="NewsLetter">
+          <Key>
+            <PropertyRef Name="NewLetterId" />
+          </Key>
+          <Property Name="NewLetterId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Tag">
+          <Key>
+            <PropertyRef Name="TagId" />
+          </Key>
+          <Property Name="TagId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TagName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="ArticleTags" Relationship="Self.FK_ArticleTag_Tag" FromRole="Tag" ToRole="ArticleTag" />
+          <NavigationProperty Name="TagCategories" Relationship="Self.FK_TagCategory_Tag" FromRole="Tag" ToRole="TagCategory" />
+          <Property Name="TagUrl" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TagCategory">
+          <Key>
+            <PropertyRef Name="JoinRowId" />
+          </Key>
+          <Property Name="JoinRowId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TagId" Type="Int32" Nullable="false" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Category" Relationship="Self.FK_TagCategory_Category" FromRole="TagCategory" ToRole="Category" />
+          <NavigationProperty Name="Tag" Relationship="Self.FK_TagCategory_Tag" FromRole="TagCategory" ToRole="Tag" />
+        </EntityType>
+        <EntityType Name="Tracking">
+          <Key>
+            <PropertyRef Name="TrackingRowId" />
+          </Key>
+          <Property Name="TrackingRowId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Session" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="URL" Type="String" MaxLength="400" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_ArticleCategory_Article">
+          <End Role="Article" Type="Self.Article" Multiplicity="1" />
+          <End Role="ArticleCategory" Type="Self.ArticleCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Article">
+              <PropertyRef Name="ArticleId" />
+            </Principal>
+            <Dependent Role="ArticleCategory">
+              <PropertyRef Name="ArticleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ArticleComment_Article">
+          <End Role="Article" Type="Self.Article" Multiplicity="1" />
+          <End Role="ArticleComment" Type="Self.ArticleComment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Article">
+              <PropertyRef Name="ArticleId" />
+            </Principal>
+            <Dependent Role="ArticleComment">
+              <PropertyRef Name="ArticleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ArticleTag_Article">
+          <End Role="Article" Type="Self.Article" Multiplicity="1" />
+          <End Role="ArticleTag" Type="Self.ArticleTag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Article">
+              <PropertyRef Name="ArticleId" />
+            </Principal>
+            <Dependent Role="ArticleTag">
+              <PropertyRef Name="ArticleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ArticleCategory_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="ArticleCategory" Type="Self.ArticleCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="CategoryRowId" />
+            </Principal>
+            <Dependent Role="ArticleCategory">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ArticleTag_Tag">
+          <End Role="Tag" Type="Self.Tag" Multiplicity="1" />
+          <End Role="ArticleTag" Type="Self.ArticleTag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tag">
+              <PropertyRef Name="TagId" />
+            </Principal>
+            <Dependent Role="ArticleTag">
+              <PropertyRef Name="TagId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TagCategory_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="TagCategory" Type="Self.TagCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="CategoryRowId" />
+            </Principal>
+            <Dependent Role="TagCategory">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TagCategory_Tag">
+          <End Role="Tag" Type="Self.Tag" Multiplicity="1" />
+          <End Role="TagCategory" Type="Self.TagCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tag">
+              <PropertyRef Name="TagId" />
+            </Principal>
+            <Dependent Role="TagCategory">
+              <PropertyRef Name="TagId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BlogEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Articles" EntityType="Self.Article" />
+          <EntitySet Name="ArticleCategories" EntityType="Self.ArticleCategory" />
+          <EntitySet Name="ArticleComments" EntityType="Self.ArticleComment" />
+          <EntitySet Name="ArticleTags" EntityType="Self.ArticleTag" />
+          <EntitySet Name="Categories" EntityType="Self.Category" />
+          <EntitySet Name="Errors" EntityType="Self.Error" />
+          <EntitySet Name="NewsLetters" EntityType="Self.NewsLetter" />
+          <EntitySet Name="Tags" EntityType="Self.Tag" />
+          <EntitySet Name="TagCategories" EntityType="Self.TagCategory" />
+          <EntitySet Name="Trackings" EntityType="Self.Tracking" />
+          <AssociationSet Name="FK_ArticleCategory_Article" Association="Self.FK_ArticleCategory_Article">
+            <End Role="Article" EntitySet="Articles" />
+            <End Role="ArticleCategory" EntitySet="ArticleCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ArticleComment_Article" Association="Self.FK_ArticleComment_Article">
+            <End Role="Article" EntitySet="Articles" />
+            <End Role="ArticleComment" EntitySet="ArticleComments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ArticleTag_Article" Association="Self.FK_ArticleTag_Article">
+            <End Role="Article" EntitySet="Articles" />
+            <End Role="ArticleTag" EntitySet="ArticleTags" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ArticleCategory_Category" Association="Self.FK_ArticleCategory_Category">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="ArticleCategory" EntitySet="ArticleCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ArticleTag_Tag" Association="Self.FK_ArticleTag_Tag">
+            <End Role="Tag" EntitySet="Tags" />
+            <End Role="ArticleTag" EntitySet="ArticleTags" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TagCategory_Category" Association="Self.FK_TagCategory_Category">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="TagCategory" EntitySet="TagCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TagCategory_Tag" Association="Self.FK_TagCategory_Tag">
+            <End Role="Tag" EntitySet="Tags" />
+            <End Role="TagCategory" EntitySet="TagCategories" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BlogModelStoreContainer" CdmEntityContainer="BlogEntities">
+          <EntitySetMapping Name="Articles">
+            <EntityTypeMapping TypeName="BlogModel.Article">
+              <MappingFragment StoreEntitySet="Article">
+                <ScalarProperty Name="PrimaryCategory" ColumnName="PrimaryCategory" />
+                <ScalarProperty Name="ArticleId" ColumnName="ArticleId" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="Keywords" ColumnName="Keywords" />
+                <ScalarProperty Name="MainContent" ColumnName="MainContent" />
+                <ScalarProperty Name="SideContent" ColumnName="SideContent" />
+                <ScalarProperty Name="ListItemContent" ColumnName="ListItemContent" />
+                <ScalarProperty Name="ViewRequests" ColumnName="ViewRequests" />
+                <ScalarProperty Name="URLLink" ColumnName="URLLink" />
+                <ScalarProperty Name="PreviewImg" ColumnName="PreviewImg" />
+                <ScalarProperty Name="isCopied" ColumnName="isCopied" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ArticleCategories">
+            <EntityTypeMapping TypeName="BlogModel.ArticleCategory">
+              <MappingFragment StoreEntitySet="ArticleCategory">
+                <ScalarProperty Name="JoinRowId" ColumnName="JoinRowId" />
+                <ScalarProperty Name="ArticleId" ColumnName="ArticleId" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ArticleComments">
+            <EntityTypeMapping TypeName="BlogModel.ArticleComment">
+              <MappingFragment StoreEntitySet="ArticleComment">
+                <ScalarProperty Name="CommentId" ColumnName="CommentId" />
+                <ScalarProperty Name="ArticleId" ColumnName="ArticleId" />
+                <ScalarProperty Name="PosterName" ColumnName="PosterName" />
+                <ScalarProperty Name="PosterEmail" ColumnName="PosterEmail" />
+                <ScalarProperty Name="PosterWebSite" ColumnName="PosterWebSite" />
+                <ScalarProperty Name="CommentText" ColumnName="CommentText" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="RepyToCommentId" ColumnName="RepyToCommentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ArticleTags">
+            <EntityTypeMapping TypeName="BlogModel.ArticleTag">
+              <MappingFragment StoreEntitySet="ArticleTag">
+                <ScalarProperty Name="JoinRowId" ColumnName="JoinRowId" />
+                <ScalarProperty Name="ArticleId" ColumnName="ArticleId" />
+                <ScalarProperty Name="TagId" ColumnName="TagId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="BlogModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="CategoryRowId" ColumnName="CategoryRowId" />
+                <ScalarProperty Name="TopNavIndex" ColumnName="TopNavIndex" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="CategoryUrl" ColumnName="CategoryUrl" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Errors">
+            <EntityTypeMapping TypeName="BlogModel.Error">
+              <MappingFragment StoreEntitySet="Error">
+                <ScalarProperty Name="ErrorId" ColumnName="ErrorId" />
+                <ScalarProperty Name="RefId" ColumnName="RefId" />
+                <ScalarProperty Name="ErrorMethod" ColumnName="ErrorMethod" />
+                <ScalarProperty Name="ErrorText" ColumnName="ErrorText" />
+                <ScalarProperty Name="ErrorDate" ColumnName="ErrorDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NewsLetters">
+            <EntityTypeMapping TypeName="BlogModel.NewsLetter">
+              <MappingFragment StoreEntitySet="NewsLetter">
+                <ScalarProperty Name="NewLetterId" ColumnName="NewLetterId" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tags">
+            <EntityTypeMapping TypeName="BlogModel.Tag">
+              <MappingFragment StoreEntitySet="Tag">
+                <ScalarProperty Name="TagUrl" ColumnName="TagUrl" />
+                <ScalarProperty Name="TagId" ColumnName="TagId" />
+                <ScalarProperty Name="TagName" ColumnName="TagName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TagCategories">
+            <EntityTypeMapping TypeName="BlogModel.TagCategory">
+              <MappingFragment StoreEntitySet="TagCategory">
+                <ScalarProperty Name="JoinRowId" ColumnName="JoinRowId" />
+                <ScalarProperty Name="TagId" ColumnName="TagId" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Trackings">
+            <EntityTypeMapping TypeName="BlogModel.Tracking">
+              <MappingFragment StoreEntitySet="Tracking">
+                <ScalarProperty Name="TrackingRowId" ColumnName="TrackingRowId" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Session" ColumnName="Session" />
+                <ScalarProperty Name="IP" ColumnName="IP" />
+                <ScalarProperty Name="URL" ColumnName="URL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

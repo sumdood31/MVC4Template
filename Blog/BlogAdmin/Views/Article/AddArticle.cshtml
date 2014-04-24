@@ -1,0 +1,81 @@
+﻿@model BlogAdmin.Models.NewArticleModel
+@{
+    ViewBag.Title = "AddArticle";
+}
+
+<h2>Add Article</h2>
+<hgroup class="title">
+    <h1>@ViewBag.Title.</h1>
+    <h2>Create a new article.</h2>
+</hgroup>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+
+    <fieldset>
+        <legend>New Article</legend>
+        <ol>
+            <li>
+                @Html.LabelFor(m => m.Article.Name)
+                @Html.TextBoxFor(m => m.Article.Name)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Article.Title)
+                @Html.TextBoxFor(m => m.Article.Title)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Article.Description)
+                @Html.TextBoxFor(m => m.Article.Description)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Article.Author)
+                @Html.TextBoxFor(m => m.Article.Author)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Article.Keywords)
+                @Html.TextBoxFor(m => m.Article.Keywords)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Article.MainContent)
+                @Html.TextAreaFor(m => m.Article.MainContent)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Article.SideContent)
+                @Html.TextAreaFor(m => m.Article.SideContent)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Article.ListItemContent)
+                @Html.TextAreaFor(m => m.Article.ListItemContent)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Article.URLLink)
+                @Html.TextBoxFor(m => m.Article.URLLink)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Article.PreviewImg)
+                @Html.TextBoxFor(m => m.Article.PreviewImg)
+            </li>
+            <li>
+                <label>Categories</label>
+                @foreach (BlogData.Category cat in Model.CategoryList)
+                {
+                    <input type="checkbox" name="@cat.CategoryName" value="@cat.CategoryRowId" />
+                }
+            </li>
+            <li>
+                <label>Tags</label>
+                @foreach (BlogData.Tag cat in Model.TagList)
+                {
+                    <input type="checkbox" name="@cat.TagName" value="@cat.TagId" />
+                }
+            </li>     
+        </ol>
+        <input type="submit" value="Register" />
+    </fieldset>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

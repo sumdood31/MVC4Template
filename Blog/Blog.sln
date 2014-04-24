@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogWeb", "Blog\BlogWeb.csproj", "{F298B733-4F92-4D62-8B17-CB0A5D2F4F65}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogAdmin", "BlogAdmin\BlogAdmin.csproj", "{59CAEB7D-BB23-44C5-9F33-DA786F7C31CB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogData", "BlogData\BlogData.csproj", "{BC7F6A95-9446-42D3-91D2-AAFDE709D4F3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F298B733-4F92-4D62-8B17-CB0A5D2F4F65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F298B733-4F92-4D62-8B17-CB0A5D2F4F65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F298B733-4F92-4D62-8B17-CB0A5D2F4F65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F298B733-4F92-4D62-8B17-CB0A5D2F4F65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59CAEB7D-BB23-44C5-9F33-DA786F7C31CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59CAEB7D-BB23-44C5-9F33-DA786F7C31CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59CAEB7D-BB23-44C5-9F33-DA786F7C31CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59CAEB7D-BB23-44C5-9F33-DA786F7C31CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC7F6A95-9446-42D3-91D2-AAFDE709D4F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC7F6A95-9446-42D3-91D2-AAFDE709D4F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC7F6A95-9446-42D3-91D2-AAFDE709D4F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC7F6A95-9446-42D3-91D2-AAFDE709D4F3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
