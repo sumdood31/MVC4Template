@@ -193,6 +193,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="sp_GetTrendingPosts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="BlogModelStoreContainer">
           <EntitySet Name="Article" EntityType="Self.Article" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ArticleCategory" EntityType="Self.ArticleCategory" Schema="dbo" store:Type="Tables" />
@@ -478,7 +479,13 @@
             <End Role="Tag" EntitySet="Tags" />
             <End Role="TagCategory" EntitySet="TagCategories" />
           </AssociationSet>
+          <FunctionImport Name="sp_GetTrendingPosts" ReturnType="Collection(BlogModel.sp_GetTrendingPosts_Result)" />
         </EntityContainer>
+        <ComplexType Name="sp_GetTrendingPosts_Result">
+          <Property Type="Int32" Name="ViewCount" Nullable="true" />
+          <Property Type="String" Name="URL" Nullable="false" MaxLength="400" />
+          <Property Type="String" Name="ArticleName" Nullable="true" MaxLength="400" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -599,6 +606,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetTrendingPosts" FunctionName="BlogModel.Store.sp_GetTrendingPosts">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BlogModel.sp_GetTrendingPosts_Result">
+                <ScalarProperty Name="ViewCount" ColumnName="ViewCount" />
+                <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="ArticleName" ColumnName="ArticleName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

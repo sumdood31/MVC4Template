@@ -62,7 +62,7 @@
                     type: 'POST',
                     contentType: 'application/json; charset=utf-8',
                     success: function (data) {
-                        $('#currentTags').append(ui.item.value);
+                        $('#currentTags').append(ui.item.value + ', ');
                     },
                     error: function () {
                         alert("Dood, something didn't work...your welcome");
@@ -145,10 +145,6 @@
                     @tag.Tag.TagName @:,
                 }
             </div></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td><input type="text" id="" /></td>
     </tr>
     <tr>
         <td></td>

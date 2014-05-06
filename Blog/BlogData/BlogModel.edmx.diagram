@@ -14,7 +14,7 @@
         <EntityTypeShape EntityType="BlogModel.NewsLetter" Width="1.5" PointX="7.75" PointY="9.375" IsExpanded="true" />
         <EntityTypeShape EntityType="BlogModel.Tag" Width="1.5" PointX="3.75" PointY="2" IsExpanded="true" />
         <EntityTypeShape EntityType="BlogModel.TagCategory" Width="1.5" PointX="6" PointY="1.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="BlogModel.Tracking" Width="1.5" PointX="8.75" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BlogModel.Tracking" Width="1.5" PointX="7.75" PointY="1.25" IsExpanded="true" />
         <AssociationConnector Association="BlogModel.FK_ArticleCategory_Article" ManuallyRouted="false" />
         <AssociationConnector Association="BlogModel.FK_ArticleComment_Article" ManuallyRouted="false" />
         <AssociationConnector Association="BlogModel.FK_ArticleTag_Article" ManuallyRouted="false" />

@@ -1,4 +1,5 @@
-﻿@using BlogWeb
+﻿@using BlogData
+@using BlogWeb
 @model BlogWeb.Models.ArticleListModel
 
 @section HeaderMeta {
@@ -15,7 +16,7 @@
                 <div class="postDate  @post.PrimaryCategory-Date"><div>@post.CreatedDate.Day</div><span class="date">@post.CreatedDate.ToString("MMM")</span></div>
                 <div class="post">
                     <h4><a href="Article/@post.URLLink">@post.Name</a></h4>
-                    <p>@Html.Raw(post.ListItemContent)  <a href="Article/@post.URLLink">Read Full Post</a></p>
+                    <p>@Html.Raw(post.ListItemContent) </p> <a href="Article/@post.URLLink">Read Full Post</a>
                     <div class="tags">
                         <div style="float: left; font-weight: bold; margin-right: 20px;">
                             TAGS
@@ -44,7 +45,8 @@
                 </div>
             </div>
         }
-        <div class="postWrap">
+
+        @*<div class="postWrap">
             <div class="postDate"><div>8</div><span class="date">DEC</span></div>
             <div class="post">
                 <h4>Post Title and Things and stuff and THINGS</h4>
@@ -73,62 +75,79 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>*@
 
     </div>
-
 
 }
 
 @section RightSide {
 
-<div class="col-sm-4" style="background-color: white; padding: 0px;">
-    <div class="sideItem" style="height: 50px; background-color: grey;">
-        <div class="col-sm-9" style="border: solid 1px black;">
-            New Letter Sign Up
+    <div class="col-sm-4" style="background-color: white; padding: 0px;">
+        <div class="sideItem" style="height: 50px; background-color: grey;">
+            <div class="col-sm-9" style="border: solid 1px black;">
+                News Letter Sign Up
+            </div>
+            <div class="col-sm-3">
+                RSS
+            </div>
         </div>
-        <div class="col-sm-3">
-            RSS
+        <div class="sideFiller"></div>
+        <div class="sideItem" id="trendingPosts">
+            <h3>Trending Posts</h3>
+            <ul>
+                @foreach (sp_GetTrendingPosts_Result post in Model.TrendingPosts)
+                {
+                    <li><a href="@post.URL">@post.ArticleName</a></li>
+                }
+            </ul>
         </div>
-    </div>
-    <div class="sideFiller"></div>
-    <div class="sideItem" id="trendingPosts">
-        <h3>Trending Posts</h3>
-        <ul>
-            <li><a href="#">Post Tiatla nd asome stuff</a></li>
-            <li><a href="#">Check this out</a></li>
-            <li><a href="#">Woodchuck's chuck is chucking</a></li>
-            <li><a href="#">Turn terd nuggets into gold</a></li>
-        </ul>
-    </div>
-    <div class="sideFiller"></div>
-    <div class="sideItem" id="sideItemTags">
-        @*<h2>Tags</h2>*@
-        <ul>
-            <li class="navArrow">&#9668;</li>
-            <li class="tagCat"><h3>Science</h3></li>
-            <li class="tagCat" style="display: none;"><h3>Tech</h3></li>
-            <li class="tagCat" style="display: none;"><h3>Manufacturing</h3></li>
-            <li class="tagCat" style="display: none;"><h3>Nature</h3></li>
-            <li class="tagCat" style="display: none;"><h3>Other</h3></li>
-            <li class="navArrow" direction="right">&#9658;</li>
-        </ul>
-        <div class="tagCatList">
-            <a href="">Scirence</a> | <a href="">tagfea</a> | <a href="">fads adad </a> | <a href="">doood, what?</a> | <a href="">tag</a> | <a href="">tagfea</a> | <a href="">fads adad </a> | <a href="">doood, what?</a>
-        </div>
-        <div class="tagCatList" style="display: none;">
-            <a href="">Tech</a> | <a href="">tagfea</a> | <a href="">fads adad </a> | <a href="">doood, what?</a> | <a href="">tag</a> | <a href="">tagfea</a> | <a href="">fads adad </a> | <a href="">doood, what?</a>
-        </div>
-        <div class="tagCatList" style="display: none;">
-            <a href="">Manufactuarinag</a> | <a href="">tagfea</a> | <a href="">fads adad </a> | <a href="">doood, what?</a> | <a href="">tag</a> | <a href="">tagfea</a> | <a href="">fads adad </a> | <a href="">doood, what?</a>
-        </div>
-        <div class="tagCatList" style="display: none;">
-            <a href="">Natuer</a> | <a href="">tagfea</a> | <a href="">fads adad </a> | <a href="">doood, what?</a> | <a href="">tag</a> | <a href="">tagfea</a> | <a href="">fads adad </a> | <a href="">doood, what?</a>
-        </div>
-        <div class="tagCatList" style="display: none;">
-            <a href="">Other</a> | <a href="">tagfea</a> | <a href="">fads adad </a> | <a href="">doood, what?</a> | <a href="">tag</a> | <a href="">tagfea</a> | <a href="">fads adad </a> | <a href="">doood, what?</a>
-        </div>
-    </div>
-</div>
+        <div class="sideFiller"></div>
+        <div class="sideItem" id="sideItemTags">
+            @*<h2>Tags</h2>*@
+            <ul>
+                <li class="navArrow">&#9668;</li>
+                @foreach (Category cat in Model.AllTags.Select(at => at.Category).Distinct())
+                {
+                    if (Model.AllTags.Select(at => at.Category).First() == cat)
+                    {
+                        <li class="tagCat"><h3>@cat.CategoryName</h3></li>
+                    }
+                    else
+                    {
+                        <li class="tagCat" style="display: none;"><h3>@cat.CategoryName</h3></li>
+                    }
+                }
+                <li class="navArrow" direction="right">&#9658;</li>
+            </ul>
 
+            @{ int indexItemIndex = 0; }
+            @foreach (Category cat in Model.AllTags.Select(at => at.Category).Distinct())
+            {
+
+                    if (indexItemIndex >= 1)
+                    {
+                        <div class="tagCatList" style="display: none;">
+                            @foreach (Tag tag in Model.AllTags.Where(at => at.CategoryId == cat.CategoryRowId).Select(at => at.Tag))
+                            {
+                                <a href="">@tag.TagName</a>
+                                @:|
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="tagCatList">
+                            @foreach (Tag tag in Model.AllTags.Where(at => at.CategoryId == cat.CategoryRowId).Select(at => at.Tag))
+                            {
+                                <a href="">@tag.TagName</a>
+                                @:|
+                            }
+                        </div>
+                }
+                indexItemIndex++;
+            } 
+                
+        </div>
+    </div>
 }

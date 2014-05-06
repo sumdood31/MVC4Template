@@ -7,6 +7,12 @@
         body {
             background-color: #C9D3E2;
         }
+        #headerLogo {
+            font-size: 110px;
+            left: 45px;
+            position: absolute;
+            top: -67px;
+        }
         .background {
             background: url('/Content/Img/backGround.jpg') repeat;
         }
@@ -161,6 +167,7 @@
 
             }
             .post .tags {
+                margin-top: 10px;
                 border-top: #797f88;
                 border-left: #797f88;
                 border-right: #797f88;
@@ -228,6 +235,7 @@
         }
         #sideItemTags {
             text-align: center;
+            padding-bottom: 30px;
         }
         #sideItemTags ul {
             width: 100%;

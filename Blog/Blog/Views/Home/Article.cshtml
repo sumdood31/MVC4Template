@@ -1,5 +1,274 @@
-﻿@{
-    ViewBag.Title = "Article";
+﻿@using BlogWeb
+@using BlogWeb.Models
+@model BlogWeb.Models.ArticleModel
+
+@section HeaderMeta {
+    @Html.Partial("Controls/HeaderMeta", new ApplicationModel
+    {
+        Author = Model.Article.Author,
+        Description = Model.Article.Description,
+        Keywords = Model.Article.Keywords,
+        Title = Model.Article.Title
+    })
 }
 
-<h2>Article</h2>
+
+@section MainBody {
+
+    <div class="col-sm-8" style="">
+        <div class="postWrap">
+            <div class="postDate  @Model.Article.PrimaryCategory-Date"><div>@Model.Article.CreatedDate.Day</div><span class="date">@Model.Article.CreatedDate.ToString("MMM")</span></div>
+            <div class="post">
+                <h1>@Model.Article.Name</h1>
+                <p>
+                    @Html.Raw(Model.Article.MainContent)
+                <div class="tags">
+                    <div style="float: left; font-weight: bold; margin-right: 20px;">
+                        TAGS
+                    </div>
+                    <div>
+                        @foreach (BlogData.ArticleTag tag in Model.Article.ArticleTags)
+                        {
+                        <a href="">@tag.Tag.TagName</a> @:|
+                        }
+                    </div>
+                </div>
+                <div class="additionalLists">
+                    <div class="col-sm-4 listItem">
+                        <h6>Comments</h6>
+                        <span>@Model.Article.ArticleComments.Count</span>
+                    </div>
+                    <div class="col-sm-4 listItem">
+                        <h6>Header Title</h6>
+                        <span>more infor and stuff</span>
+                    </div>
+                    <div class="col-sm-4 listItem">
+                        <h6>Ttile of Header</h6>
+                        <span>hey,c heck this oaut </span>
+                    </div>
+                </div>
+        
+
+
+        <style>
+            .newsLetterRss {
+
+            }
+            #commentWrap {
+
+            }
+        </style>
+
+        <div class="newsLetterRss">
+            <table>
+                <tr></tr>
+            </table>
+        </div>
+
+
+        <input type="hidden" value="@Model.Article.ArticleId" id="articleId" />
+        <div class="sfcommentsListWrp  box-content">
+            <h2 class="sfcommentsTitle" id="comments">
+                @Model.Article.ArticleComments.Count() Comments
+            </h2>
+            <ol class="sfcommentsList">
+
+                @foreach (BlogData.ArticleComment comment in Model.Article.ArticleComments.Where(c => c.RepyToCommentId == 0))
+                        {
+                        <li class="sfcommentDetails">
+                            <div class="media">
+                                <div class="pull-left">
+                                    @* <a href="#" class="pull-left">*@
+                                    @if (!String.IsNullOrEmpty(comment.PosterName))
+                                        {
+                                        <strong class="sfcommentAuthor">@comment.PosterName</strong>
+                                        }
+                                    <em class="sfcommentDate">@comment.CreatedDate.ToShortDateString()</em>
+                                    <img data-src="holder.js/64x64" class="media-object" alt="" style="width: 64px; height: 64px;" src="">
+                                    @*</a>*@
+                                </div>
+                                <div class="media-body">
+                                    @comment.CommentText
+                                    @* <div  class="replyLink"><a href="#">reply</a></div>*@
+                                    @foreach (BlogData.ArticleComment subComment in Model.Article.ArticleComments.Where(c => c.RepyToCommentId == comment.CommentId))
+                                        {
+                                        <div class="media" style="margin-top:15px;">
+                                            <div class="pull-left">
+                                                @*    <a href="#" class="pull-left">*@
+                                                @if (!String.IsNullOrEmpty(subComment.PosterName))
+                                                    {
+                                                    <strong class="sfcommentAuthor">@subComment.PosterName</strong>
+                                                    }
+                                                <em class="sfcommentDate">@subComment.CreatedDate.ToShortDateString()</em>
+                                                <img data-src="holder.js/64x64" class="media-object" alt="" style="width: 64px; height: 64px;" src="">
+                                                @*  </a>*@
+                                            </div>
+                                            <div class="media-body">
+                                                @subComment.CommentText
+                                            </div>
+                                        </div>
+                                        }
+                                </div>
+                            </div>
+                        </li>
+
+                        }
+
+            </ol>
+            <br />
+            @*            <div class="row-fluid">
+                <div class="pagination" style="float:right;">
+                    <ul>
+                        <li><a href="#">Prev</a></li>
+                        <li><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">5</a></li>
+                        <li><a href="#">Next</a></li>
+                    </ul>
+                </div>
+            </div>*@
+        </div>
+
+
+        <br />
+
+        <div class="sfcommentsFormWrp  box-content">
+            <h2 class="sfcommentsTitle">Comment</h2>
+            <fieldset class="sfcommentsForm">
+                <ol class="sfcommentsFieldsList">
+                    <li class="sfcommentsField">
+                        <div>
+                            <label class="sfTxtLbl">Your name</label>
+                            <div class="sfFieldWrp">
+                                <input type="text" id="txtPosterName" class="sfTxt">
+                            </div>
+
+                            <div style="display:none;">
+                                <div id="ClientTemplatePanel_authorName">
+                                    <div class="sfTxtLbl" id="titleLabel_read_authorName"></div>
+                                    <div class="sfTxtContent" id="textLabel_read_authorName"></div>
+                                    <p class="sfDescription" id="descriptionLabel_read_authorName"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="sfcommentsField">
+                        <div>
+                            <label class="sfTxtLbl">Email <em class="sfNote">(optional)</em></label>
+                            <div class="sfFieldWrp">
+                                <input type="text" id="txtPosterEmail" class="sfTxt">
+                            </div>
+                            <div style="display:none;">
+                                <div id="ClientTemplatePanel_email">
+                                    <div class="sfTxtLbl" id="titleLabel_read_email"> </div>
+                                    <div class="sfTxtContent" id="textLabel_read_email"> </div>
+                                    <p class="sfDescription" id="descriptionLabel_read_email"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="sfcommentsField">
+                        <div>
+                            <label class="sfTxtLbl">Website <em class="sfNote">(optional)</em></label>
+                            <div class="sfFieldWrp">
+                                <input type="text" id="txtPosterWebSite" class="sfTxt">
+                            </div>
+                        </div>
+                    </li>
+                    <li class="sfcommentEditor sfcommentsField">
+                        <div>
+                            <label class="sfTxtLbl">Comment</label>
+                            <div class="sfEditorWrp sfClearfix">
+                                <div style="height: 200px; width: 100%; min-height: 200px; min-width: 480px;" class="RadEditor Sitefinity reWrapper sfMoreTools">
+                                    <div class="reRibbonBarWrapper"></div>
+                                    <table cellspacing="0" cellpadding="0" style="table-layout:auto;width:100%;height:200px;">
+                                        <tbody>
+                                            <tr>
+                                                <td class="reWrapper_corner reCorner_top_left">&nbsp;</td>
+                                                <td colspan="3" class="reWrapper_center reCenter_top">&nbsp;</td>
+                                                <td class="reWrapper_corner reCorner_top_right">&nbsp;</td>
+                                            </tr>
+                                            <tr>
+                                                <td valign="top" style="height:100%;" class="reContentCell">
+                                                    <textarea id="txtCommentText" cols="20" rows="8" style="width:80%"></textarea>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="reWrapper_corner reCorner_bottom_left">&nbsp;</td>
+                                                <td colspan="3" class="reWrapper_center reCenter_bottom">&nbsp;</td>
+                                                <td class="reWrapper_corner reCorner_bottom_right">&nbsp;</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ol>
+                <div class="sfcommentsSubmitBtnWrp">
+                    <input type="submit" id="btnSubmitComment" class="sfcommentsSubmitBtn" value="Submit">
+                </div>
+            </fieldset>
+
+        </div>
+    </div>
+    </div>
+    </div>
+
+
+}
+
+@section RightSide {
+
+    <div class="col-sm-4" style="background-color: white; padding: 0px;">
+        <div class="sideItem" style="height: 50px; background-color: grey;">
+            <div class="col-sm-9" style="border: solid 1px black;">
+                New Letter Sign Up
+            </div>
+            <div class="col-sm-3">
+                RSS
+            </div>
+        </div>
+        <div class="sideFiller"></div>
+        <div class="sideItem" id="trendingPosts">
+            <h3>Trending Posts</h3>
+            <ul>
+                <li><a href="#">Post Tiatla nd asome stuff</a></li>
+                <li><a href="#">Check this out</a></li>
+                <li><a href="#">Woodchuck's chuck is chucking</a></li>
+                <li><a href="#">Turn terd nuggets into gold</a></li>
+            </ul>
+        </div>
+        <div class="sideFiller"></div>
+        <div class="sideItem" id="sideItemTags">
+            @*<h2>Tags</h2>*@
+            <ul>
+                <li class="navArrow">&#9668;</li>
+                <li class="tagCat"><h3>Science</h3></li>
+                <li class="tagCat" style="display: none;"><h3>Tech</h3></li>
+                <li class="tagCat" style="display: none;"><h3>Manufacturing</h3></li>
+                <li class="tagCat" style="display: none;"><h3>Nature</h3></li>
+                <li class="tagCat" style="display: none;"><h3>Other</h3></li>
+                <li class="navArrow" direction="right">&#9658;</li>
+            </ul>
+            <div class="tagCatList">
+                <a href="">Scirence</a> | <a href="">tagfea</a> | <a href="">fads adad </a> | <a href="">doood, what?</a> | <a href="">tag</a> | <a href="">tagfea</a> | <a href="">fads adad </a> | <a href="">doood, what?</a>
+            </div>
+            <div class="tagCatList" style="display: none;">
+                <a href="">Tech</a> | <a href="">tagfea</a> | <a href="">fads adad </a> | <a href="">doood, what?</a> | <a href="">tag</a> | <a href="">tagfea</a> | <a href="">fads adad </a> | <a href="">doood, what?</a>
+            </div>
+            <div class="tagCatList" style="display: none;">
+                <a href="">Manufactuarinag</a> | <a href="">tagfea</a> | <a href="">fads adad </a> | <a href="">doood, what?</a> | <a href="">tag</a> | <a href="">tagfea</a> | <a href="">fads adad </a> | <a href="">doood, what?</a>
+            </div>
+            <div class="tagCatList" style="display: none;">
+                <a href="">Natuer</a> | <a href="">tagfea</a> | <a href="">fads adad </a> | <a href="">doood, what?</a> | <a href="">tag</a> | <a href="">tagfea</a> | <a href="">fads adad </a> | <a href="">doood, what?</a>
+            </div>
+            <div class="tagCatList" style="display: none;">
+                <a href="">Other</a> | <a href="">tagfea</a> | <a href="">fads adad </a> | <a href="">doood, what?</a> | <a href="">tag</a> | <a href="">tagfea</a> | <a href="">fads adad </a> | <a href="">doood, what?</a>
+            </div>
+        </div>
+    </div>
+
+}

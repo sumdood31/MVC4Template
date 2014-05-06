@@ -203,6 +203,7 @@
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\ApplicationModel.cs" />
     <Compile Include="Models\ArticleListModel.cs" />
+    <Compile Include="Models\ArticleModel.cs" />
     <Compile Include="Models\ErrorModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

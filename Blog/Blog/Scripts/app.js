@@ -169,6 +169,47 @@
         }
     }
 
+    //ADD COMMENT METHOD
+    $('#btnSubmitComment').click(function () {
+
+        var comment = {
+            ArticleId: $('#articleId').val(),
+            PosterName: $('#txtPosterName').val(),
+            PosterEmail: $('#txtPosterEmail').val(),
+            PosterWebSite: $('#txtPosterWebSite').val(),
+            CommentText: $('#txtCommentText').val()
+        }
+
+        if (comment.PosterName == '') {
+            alert('Post Name is required.');
+            return;
+        }
+        if (comment.CommentText == '') {
+            alert('Comment Text is required.');
+            return;
+        }
+
+        $.ajax({
+            url: GetRootURL() + 'Home/PostComment',
+            data: JSON.stringify(comment),
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                if (data.success) {
+                    //loadingDiv.hide();
+                    //mediator.publish('BetLoadDone', {});
+                } else {
+                    //show error
+                    mediator.publish('pageError', { error: data.message, method: 'Insert Comment' });
+                }
+            },
+            error: function () {
+                mediator.publish('logError', { error: 'Error with service for inserting comment', method: 'Insert Comment' });
+            }
+        });
+
+    });
+
     //**************************** SETS ACTIVE COLOR FOR TOP NAVIGATION
     //try {
     //    //topNavSelectedId is set in _Layout using the viewbag set in the controler.  PageBaseModel.ActiveTopNavLink
@@ -266,45 +307,5 @@
     //pageError.publish('logError', { error: 'INDEX VIEW PAGE CLICK ERRORr', method: 'only log error, no responce to page elements.' });
 
     //mediator.publish('masterPageError', { error: err.message, method: 'core.js, on document ready' });
-
-    $('#btnSubmitComment').click(function () {
-
-        var comment = {
-            ArticleId: $('#articleId').val(),
-            PosterName: $('#txtPosterName').val(),
-            PosterEmail: $('#txtPosterEmail').val(),
-            PosterWebSite: $('#txtPosterWebSite').val(),
-            Text: $('#txtCommentText').val()
-        }
-
-        if (comment.PosterName == '') {
-            alert('Post Name is required.');
-            return;
-        }
-        if (comment.Text == '') {
-            alert('Comment Text is required.');
-            return;
-        }
-
-        $.ajax({
-            url: GetRootURL() + 'Service/PostComment',
-            data: JSON.stringify(comment),
-            type: 'POST',
-            contentType: 'application/json; charset=utf-8',
-            success: function (data) {
-                if (data.success) {
-                    //loadingDiv.hide();
-                    //mediator.publish('BetLoadDone', {});
-                } else {
-                    //show error
-                    mediator.publish('pageError', { error: data.message, method: 'Insert Comment' });
-                }
-            },
-            error: function () {
-                mediator.publish('logError', { error: 'Error with service for InsertNBABetting', method: 'NBA Load Bets' });
-            }
-        });
-
-    });
 
 });

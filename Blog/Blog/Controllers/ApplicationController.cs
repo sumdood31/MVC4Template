@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+using BlogData;
 using BlogWeb.Models;
 
 namespace BlogWeb.Controllers
@@ -39,9 +40,26 @@ namespace BlogWeb.Controllers
             if (string.IsNullOrEmpty(_ipAddress))
             { _ipAddress = ctx.HttpContext.Request.ServerVariables["REMOTE_ADDR"]; }
 
-            //DIYFELib.Tracking.InsertTracking(ctx.HttpContext.Session.SessionID,
-            //                                _ipAddress,
-            //                                ctx.HttpContext.Request.Url.PathAndQuery);
+            Tracking tracking = new Tracking();
+            tracking.CreatedDate = DateTime.Now;
+            tracking.Session = ctx.HttpContext.Session.SessionID;
+            tracking.IP = _ipAddress;
+            tracking.URL = ctx.HttpContext.Request.Url.PathAndQuery;
+
+            try
+            {
+                using (var context = new BlogEntities())
+                {
+                    context.Entry(tracking).State = System.Data.EntityState.Added;
+                    context.SaveChanges();                 
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorModel err = new ErrorModel();
+                err.InsertError(ex);
+            }
+
 
             ViewBag.PageModel = PageModel;
         }
